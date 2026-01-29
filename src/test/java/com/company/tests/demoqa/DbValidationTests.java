@@ -1,12 +1,11 @@
 package com.company.tests.demoqa;
 
-import com.company.framework.auth.AuthContext;
-import com.company.framework.auth.TokenManager;
+import com.company.framework.auth.UserContext;
+import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.db.DbManager;
 import com.company.framework.db.DbClient;
 import com.company.framework.models.requests.CreateUserRequest;
-import com.company.framework.utils.IdempotencyKeyUtil;
 import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
 import org.testng.SkipException;
@@ -22,7 +21,7 @@ public class DbValidationTests extends BaseTest {
     @Test(groups = {"regression"})
     public void createUserAndValidateDb() throws Exception {
         AccountClient client = new AccountClient();
-        AuthContext ctx = TokenManager.current();
+        AuthContext ctx = UserContext.get();
         String username = ctx.username();
         CreateUserRequest request = new CreateUserRequest(username, "P@ssw0rd");
         Response resp = client.createUser(request);

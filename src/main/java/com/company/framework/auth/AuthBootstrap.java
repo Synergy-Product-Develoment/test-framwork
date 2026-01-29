@@ -2,6 +2,8 @@ package com.company.framework.auth;
 
 import java.util.UUID;
 
+import com.company.framework.auth.UserContext.AuthContext;
+
 public final class AuthBootstrap {
 
     public static AuthContext init() {
@@ -11,13 +13,13 @@ public final class AuthBootstrap {
         // initially no token
         AuthContext ctx = new AuthContext(randomUser, randomPwd, null);
 
-        // cache it globally
-        TokenManager.put(ctx);
+        // cache it globally per thread
+        UserContext.set(ctx);
 
         return ctx;
     }
 
     public static void clear() {
-        TokenManager.clear();
+        UserContext.clear();
     }
 }

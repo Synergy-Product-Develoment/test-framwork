@@ -1,7 +1,8 @@
 package com.company.framework.core;
 
-import com.company.framework.auth.AuthContext;
 import com.company.framework.auth.TokenManager;
+import com.company.framework.auth.UserContext;
+import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.config.ConfigManager;
 import com.company.framework.models.requests.CreateUserRequest;
@@ -32,15 +33,11 @@ public class AutoAuthRetryFilter implements Filter {
             return response;
         }
         // Retry once only
-        AuthContext authContextUser = TokenManager.current();
 
         Allure.step("Auth failed (" + response.statusCode() + "). Autheticating token and retrying request...");
-        authClient.generateToken(new GenerateTokenRequest(authContextUser.username(), authContextUser.password()));
-        AuthContext authContext = TokenManager.get(getDefaultUser());
-        if (authContext != null && !authContext.token().isBlank()) {
-            requestSpec.removeHeader("Authorization");
-            requestSpec.header("Authorization", "Bearer " + authContext.token());
-        }
+        authClient.refresh();
+        requestSpec.removeHeader("Authorization");
+        requestSpec.header("Authorization", "Bearer " + TokenManager.get(UserContext.getUsername()));
 
         return  ctx.next(requestSpec, responseSpec);
     }

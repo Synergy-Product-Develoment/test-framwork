@@ -24,10 +24,12 @@ public final class RetryUtil {
         }
 
         RuntimeException last = null;
-        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+        for (int attempt = 0; attempt < maxAttempts; attempt++) {
             try {
+                if (attempt > 0){
                 Allure.step("Retry attempt " + attempt + " of " + maxAttempts);
                 log.info("Retry attempt {}/{}", attempt, maxAttempts);
+                }
                 return supplier.get();
             } catch (RuntimeException e) {
                 last = e;
@@ -35,16 +37,15 @@ public final class RetryUtil {
                 try {
                     Allure.addAttachment("retry-exception-" + attempt, e.toString());
                 } catch (Exception ignore) {}
-                if (attempt < maxAttempts) {
-                    try {
-                        Thread.sleep(backoffMs);
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                        throw e;
-                    }
+                try {
+                    Thread.sleep(backoffMs);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                    throw e;
                 }
             }
         }
+        assert last != null;
         throw last;
     }
 }
