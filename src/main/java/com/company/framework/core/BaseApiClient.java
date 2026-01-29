@@ -5,6 +5,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import java.util.Arrays;
+import java.util.Map;
 
 public abstract class BaseApiClient {
 
@@ -17,6 +18,16 @@ public abstract class BaseApiClient {
     protected Response get(String path) {
         return given().when().get(buildPath(path));
     }
+
+    //get with path params reusable key sould be first arg and value showbbe secnf
+    protected Response get(String path, Map<String, Object> pathParams, Map<String, Object> headers) {
+        return given()
+                .headers(headers)
+                .pathParams(pathParams)
+                .when()
+                .get(buildPath(path));
+    }
+
 
     protected Response post(String path, Object body) {
         return given().body(body).when().post(buildPath(path));

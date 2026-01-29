@@ -6,6 +6,8 @@ import com.company.framework.models.requests.CreateUserRequest;
 import com.company.framework.models.requests.GenerateTokenRequest;
 import io.restassured.response.Response;
 
+import java.util.Map;
+
 public class AccountClient extends BaseApiClient {
 
     public Response createUser(CreateUserRequest request) {
@@ -17,11 +19,9 @@ public class AccountClient extends BaseApiClient {
     }
 
     public Response getUser(String userId, String token) {
-        return given()
-                .header("Authorization", "Bearer " + token)
-                .pathParam("userId", userId)
-                .when()
-                .get(Endpoints.GET_USER);
+
+        return get(Endpoints.GET_USER, Map.of("userId", userId), Map.of("Authorization", "Bearer " + token));
+
     }
 
 }
