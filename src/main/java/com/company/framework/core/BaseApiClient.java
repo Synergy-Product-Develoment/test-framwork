@@ -1,5 +1,6 @@
 package com.company.framework.core;
 
+import com.company.framework.config.ConfigManager;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -29,14 +30,16 @@ public abstract class BaseApiClient {
         return given().body(body).when().put(buildPath(path));
     }
 
+
+
     private String buildPath(String path) {
-        String strategy = com.company.framework.config.ConfigManager.get("api.version.strategy", "PATH");
-        String version = com.company.framework.config.ConfigManager.get("api.version", "v1");
+        String strategy = ConfigManager.get("api.version.strategy", "PATH");
+        String version = ConfigManager.get("api.version", "v1");
+
         if ("PATH".equalsIgnoreCase(strategy)) {
-            // ensure single leading slash
-            String p = path.startsWith("/") ? path : "/" + path;
-            return "/" + version + p;
+            return path.replace("{version}", version);
         }
         return path;
     }
+
 }
