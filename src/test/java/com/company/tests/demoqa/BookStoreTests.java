@@ -11,9 +11,10 @@ import java.time.Duration;
 public class BookStoreTests {
 
     private final BookStoreClient bookStoreClient = new BookStoreClient();
-    @Test
+
+    @Test(groups = {"smoke"})
     public void shouldGetAllBooks() {
-        Response response = RetryUtil.retry(2, Duration.ofSeconds(1), () -> bookStoreClient.getAllBooks());
+        Response response = RetryUtil.retry(() -> bookStoreClient.getAllBooks());
         ApiAssertions.assertStatus(response, 200);
         ApiAssertions.assertSchema(response, "schemas/books-schema.json");
     }
