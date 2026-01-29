@@ -18,6 +18,8 @@
         <allure.version>2.25.0</allure.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Default TestNG suite file; points to parent which includes child via -Dchild.suite.file -->
+        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
     </properties>
 
     <dependencyManagement>
@@ -112,10 +114,15 @@
                 <version>3.2.5</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                        <!-- default child suite path (relative) -->
+<!--                        <child.suite.file>${child.suite.file}</child.suite.file>-->
+
+                        <!-- resolved absolute path -->
+<!--                        <child.suite.file.abs>${project.basedir}/${child.suite.file}</child.suite.file.abs>-->
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

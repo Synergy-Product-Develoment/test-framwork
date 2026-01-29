@@ -9,6 +9,10 @@ on:
         description: 'Environment to run tests against'
         required: true
         default: 'qa'
+      suite:
+        description: 'TestNG suite to run (smoke/regression/full)'
+        required: false
+        default: 'full'
       groups:
         description: 'TestNG groups to run (smoke/regression)'
         required: false
@@ -38,7 +42,15 @@ jobs:
             ${{ runner.os }}-m2-
 
       - name: Build and run tests
-        run: mvn -B -DskipTests=false clean test -Denv=${{ github.event.inputs.env || github.event.pull_request.head.repo.default_branch }} -Dgroups=${{ github.event.inputs.groups || 'smoke' }}
+        run: |
+          SUITE_INPUT=${{ github.event.inputs.suite }}
+          ENV_INPUT=${{ github.event.inputs.env || github.event.pull_request.head.repo.default_branch }}
+          GROUPS_INPUT=${{ github.event.inputs.groups || 'smoke' }}
+          if [ -z "$SUITE_INPUT" ]; then SUITE_INPUT=full; fi
+          CHILD_SUITE=src/test/resources/testng-${SUITE_INPUT}.xml
+          PARENT_SUITE=src/test/resources/testng-parent.xml
+          echo "Using parent suite: $PARENT_SUITE including child: $CHILD_SUITE"
+          mvn -B -DskipTests=false clean test -Denv=${ENV_INPUT} -DsuiteXmlFile=${PARENT_SUITE} -Dchild.suite.file=${CHILD_SUITE} -Dgroups=${GROUPS_INPUT}
 
       - name: Generate Allure report
         run: mvn -B site
