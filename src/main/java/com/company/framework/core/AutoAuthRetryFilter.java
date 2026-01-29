@@ -21,53 +21,6 @@ public class AutoAuthRetryFilter implements Filter {
     private static final int MAX_RETRY = 1;
 
     AccountClient authClient = new AccountClient();
-
-
-
-//
-//    @Override
-//    public Response filter(FilterableRequestSpecification req,
-//                           FilterableResponseSpecification resSpec,
-//                           FilterContext ctx) {
-//
-//        Response response = ctx.next(req, resSpec);
-//
-//        if (!isAuthFailure(response)) return response;
-//
-//        // Retry once only
-//        Integer retryCount = (Integer) req.getAttribute("authRetryCount");
-//        if (retryCount == null) retryCount = 0;
-//        if (retryCount >= MAX_RETRY) return response;
-//
-//        req.setAttribute("authRetryCount", retryCount + 1);
-//
-//        // refresh token
-//        refreshToken();
-//
-//        // attach new token header (or whatever your auth header is)
-//        String token = TokenManager.get(getDefaultUser());
-//        if (token != null && !token.isBlank()) {
-//            req.removeHeaders("Authorization");
-//            req.header("Authorization", "Bearer " + token);
-//        }
-//
-//        Allure.step("Auth failed (" + response.statusCode() + "). Refreshed token and retrying request...");
-//
-//        return ctx.next(req, resSpec);
-//    }
-//
-//    private boolean isAuthFailure(Response response) {
-//        return response != null && (response.statusCode() == 401 || response.statusCode() == 403);
-//    }
-//
-//    private void refreshToken() {
-//        // call your existing auth client
-//        // example:
-//        // new AccountClient().generateToken(...) then TokenManager.put(user, token)
-//
-//        AuthBootstrap.ensureTokenAvailable();
-//    }
-
     private String getDefaultUser() {
         return ConfigManager.get("auth.default.user", "default");
     }
@@ -79,16 +32,16 @@ public class AutoAuthRetryFilter implements Filter {
             return response;
         }
         // Retry once only
-        AuthContext authContextUser = TokenManager.get(getDefaultUser());
-        if(!Objects.isNull(authContextUser)) {
-            Allure.step("Auth failed (" + response.statusCode() + "). Autheticating token and retrying request...");
-            authClient.generateToken(new GenerateTokenRequest(authContextUser.username(), authContextUser.password()));
+        AuthContext authContextUser = TokenManager.current();
+
+        Allure.step("Auth failed (" + response.statusCode() + "). Autheticating token and retrying request...");
+        authClient.generateToken(new GenerateTokenRequest(authContextUser.username(), authContextUser.password()));
         AuthContext authContext = TokenManager.get(getDefaultUser());
         if (authContext != null && !authContext.token().isBlank()) {
             requestSpec.removeHeader("Authorization");
             requestSpec.header("Authorization", "Bearer " + authContext.token());
         }
-        }
+
         return  ctx.next(requestSpec, responseSpec);
     }
 

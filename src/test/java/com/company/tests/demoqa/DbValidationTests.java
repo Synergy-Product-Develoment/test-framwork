@@ -1,9 +1,13 @@
 package com.company.tests.demoqa;
 
-import com.company.framework.clients.UserClient;
+import com.company.framework.auth.AuthContext;
+import com.company.framework.auth.TokenManager;
+import com.company.framework.clients.AccountClient;
 import com.company.framework.db.DbManager;
 import com.company.framework.db.DbClient;
+import com.company.framework.models.requests.CreateUserRequest;
 import com.company.framework.utils.IdempotencyKeyUtil;
+import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -13,16 +17,15 @@ import java.util.Map;
 
 import static org.testng.Assert.assertTrue;
 
-public class DbValidationTests {
+public class DbValidationTests extends BaseTest {
 
     @Test(groups = {"regression"})
     public void createUserAndValidateDb() throws Exception {
-        UserClient client = new UserClient();
-
-        String username = "test_user_" + System.currentTimeMillis();
-        var body = java.util.Map.of("username", username, "password", "P@ssw0rd");
-
-        Response resp = client.createUser(body);
+        AccountClient client = new AccountClient();
+        AuthContext ctx = TokenManager.current();
+        String username = ctx.username();
+        CreateUserRequest request = new CreateUserRequest(username, "P@ssw0rd");
+        Response resp = client.createUser(request);
         int status = resp.getStatusCode();
 
         // If DB not enabled, skip DB assertions

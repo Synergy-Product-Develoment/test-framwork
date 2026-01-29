@@ -1,25 +1,29 @@
 package com.company.tests.demoqa;
 
 import com.company.framework.assertions.ApiAssertions;
+import com.company.framework.auth.AuthContext;
+import com.company.framework.auth.TokenManager;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.clients.BookStoreClient;
 import com.company.framework.models.requests.CreateUserRequest;
 import com.company.framework.models.requests.GenerateTokenRequest;
+import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.util.UUID;
 
-public class E2EFlowTests {
+public class E2EFlowTests extends BaseTest {
 
     private final AccountClient accountClient = new AccountClient();
     private final BookStoreClient bookStoreClient = new BookStoreClient();
 
     @Test
     public void e2e_createUser_generateToken_getBooks() {
+        AuthContext ctx = TokenManager.current();
 
-        String username = "user_" + UUID.randomUUID();
-        String password = "Test@12345";
+        String username = ctx.username();
+        String password = ctx.password();
 
         Response createResp = accountClient.createUser(new CreateUserRequest(username, password));
         ApiAssertions.assertStatus(createResp, 201);

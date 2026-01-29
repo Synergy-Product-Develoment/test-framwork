@@ -3,12 +3,13 @@ package com.company.tests.demoqa;
 import com.company.framework.assertions.ApiAssertions;
 import com.company.framework.clients.BookStoreClient;
 import com.company.framework.utils.RetryUtil;
+import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class BookStoreTests {
+public class BookStoreTests extends BaseTest {
 
     private final BookStoreClient bookStoreClient = new BookStoreClient();
 
