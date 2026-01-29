@@ -1,0 +1,27 @@
+package com.company.framework.clients;
+
+import com.company.framework.config.Endpoints;
+import com.company.framework.core.BaseApiClient;
+import com.company.framework.models.requests.CreateUserRequest;
+import com.company.framework.models.requests.GenerateTokenRequest;
+import io.restassured.response.Response;
+
+public class AccountClient extends BaseApiClient {
+
+    public Response createUser(CreateUserRequest request) {
+        return post(Endpoints.CREATE_USER, request);
+    }
+
+    public Response generateToken(GenerateTokenRequest request) {
+        return post(Endpoints.GENERATE_TOKEN, request);
+    }
+
+    public Response getUser(String userId, String token) {
+        return given()
+                .header("Authorization", "Bearer " + token)
+                .pathParam("userId", userId)
+                .when()
+                .get(Endpoints.GET_USER);
+    }
+
+}
