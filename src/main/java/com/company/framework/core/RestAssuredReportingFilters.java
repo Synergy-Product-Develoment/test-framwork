@@ -26,22 +26,6 @@ public final class RestAssuredReportingFilters {
                 String body = reqSpec.getBody() == null ? null : reqSpec.getBody().toString();
                 if (body != null) body = MaskingUtil.maskSensitive(body);
                 log.info("REQUEST {} {} body={}", reqSpec.getMethod(), reqSpec.getURI(), body);
-                try {
-                    StringBuilder curl = new StringBuilder();
-                    curl.append(reqSpec.getMethod()).append(" ").append(reqSpec.getURI()).append("\n");
-                    // headers
-                    reqSpec.getHeaders().asList().forEach(h -> {
-                        String name = h.getName();
-                        String value = MaskingUtil.maskHeaderIfSensitive(h.getName(), h.getValue());
-                        curl.append(name).append(": ").append(value).append("\n");
-                    });
-                    if (body != null && !body.isEmpty()) {
-                        curl.append("\n").append(MaskingUtil.maskSensitive(body));
-                    }
-                    Allure.addAttachment("curl.txt", curl.toString());
-                } catch (Exception ignore) {
-                    // do not fail logging
-                }
             }
             return ctx.next(reqSpec, resSpec);
         };
