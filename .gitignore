@@ -1,0 +1,42 @@
+# Maven
+/target/
+/logs/
+!target/allure-results/
+
+# IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# macOS
+.DS_Store
+
+# Allure results/reports (keep in CI caches if needed)
+/target/allure-results/
+/target/allure-report/
+
+# env files and secrets
+.env
+*.env
+
+# temporary files
+*.log
+*.tmp
+
+# Node
+node_modules/
+
+# OS files
+Thumbs.db
+
+# Java
+*.class
+
+# Others
+.gradle/
+
