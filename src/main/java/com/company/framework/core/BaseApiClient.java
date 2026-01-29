@@ -12,7 +12,8 @@ public abstract class BaseApiClient {
     protected RequestSpecification given() {
         return RestAssured.given()
                 .spec(RequestSpecFactory.defaultSpec())
-                .filters(Arrays.asList(RestAssuredReportingFilters.defaultFilters()));
+                .filters(Arrays.asList(RestAssuredReportingFilters.defaultFilters()))
+                .filter(new AutoAuthRetryFilter());
     }
 
     protected Response get(String path) {
@@ -40,8 +41,6 @@ public abstract class BaseApiClient {
     protected Response put(String path, Object body) {
         return given().body(body).when().put(buildPath(path));
     }
-
-
 
     private String buildPath(String path) {
         String strategy = ConfigManager.get("api.version.strategy", "PATH");

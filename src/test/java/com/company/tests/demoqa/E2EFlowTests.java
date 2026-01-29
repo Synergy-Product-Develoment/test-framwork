@@ -34,7 +34,7 @@ public class E2EFlowTests {
         ApiAssertions.assertNotNull(token, "token should not be null");
 
         // Example secured call (Get User)
-        Response getUserResp = accountClient.getUser(userId, token);
+        Response getUserResp = accountClient.getUser(userId);
         // DemoQA may return 200 or 401 depending on token validity; keep status assertion flexible if needed
         // Here we assert it's not 500
         int status = getUserResp.getStatusCode();
