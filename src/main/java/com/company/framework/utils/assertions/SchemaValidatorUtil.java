@@ -1,4 +1,4 @@
-package com.company.framework.assertions;
+package com.company.framework.utils.assertions;
 
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;

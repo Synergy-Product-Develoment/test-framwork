@@ -1,5 +1,6 @@
 package com.company.framework.assertions;
 
+import com.company.framework.utils.assertions.SchemaValidatorUtil;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
