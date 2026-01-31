@@ -21,7 +21,7 @@ public class SuiteAuthSetupListener implements ISuiteListener {
 
     @Step("Authenticate before suite execution")
     private void authenticate() {
-       /* String username = ConfigManager.get("auth.username");
+        String username = ConfigManager.get("auth.username");
         String password = ConfigManager.get("auth.password");
 
         GenerateTokenRequest req = GenerateTokenRequest.builder()
@@ -36,6 +36,6 @@ public class SuiteAuthSetupListener implements ISuiteListener {
                 .extract()
                 .path("token");
 
-        TokenManager.put(username, token);*/
+        TokenManager.put(username, token);
     }
 }

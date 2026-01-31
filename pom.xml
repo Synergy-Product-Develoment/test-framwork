@@ -123,9 +123,6 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-
-                        <!-- resolved absolute path -->
-<!--                        <child.suite.file.abs>${project.basedir}/${child.suite.file}</child.suite.file.abs>-->
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
