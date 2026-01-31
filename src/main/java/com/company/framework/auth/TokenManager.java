@@ -10,6 +10,10 @@ public final class TokenManager {
     private TokenManager(){}
 
     public static void put(String username, String token) {
+
+        if (username == null) {
+            throw new IllegalArgumentException("Username and token must not be null");
+        }
         contextCache.put(username, token);
     }
 

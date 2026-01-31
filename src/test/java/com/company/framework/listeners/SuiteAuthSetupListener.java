@@ -3,7 +3,7 @@ package com.company.framework.listeners;
 import com.company.framework.auth.TokenManager;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.config.ConfigManager;
-import com.company.framework.models.requests.GenerateTokenRequest;
+import com.company.framework.models.requests.AuthRequest;
 import io.qameta.allure.Step;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
@@ -21,11 +21,11 @@ public class SuiteAuthSetupListener implements ISuiteListener {
 
     @Step("Authenticate before suite execution")
     private void authenticate() {
-        String username = ConfigManager.get("auth.username");
+        String email = ConfigManager.get("auth.email");
         String password = ConfigManager.get("auth.password");
 
-        GenerateTokenRequest req = GenerateTokenRequest.builder()
-                .userName(username)
+        AuthRequest req = AuthRequest.builder()
+                .email(email)
                 .password(password)
                 .build();
 
@@ -36,6 +36,6 @@ public class SuiteAuthSetupListener implements ISuiteListener {
                 .extract()
                 .path("token");
 
-        TokenManager.put(username, token);
+        TokenManager.put(email, token);
     }
 }

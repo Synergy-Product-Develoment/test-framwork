@@ -1,12 +1,12 @@
 package com.company.framework.models.requests;
 
-public class CreateUserRequest {
+public class RegisterUserRequest {
     public String userName;
     public String password;
 
-    public CreateUserRequest() {}
+    public RegisterUserRequest() {}
 
-    public CreateUserRequest(String userName, String password) {
+    public RegisterUserRequest(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

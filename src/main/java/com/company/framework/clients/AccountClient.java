@@ -3,8 +3,8 @@ package com.company.framework.clients;
 import com.company.framework.auth.TokenManager;
 import com.company.framework.config.Endpoints;
 import com.company.framework.core.BaseApiClient;
-import com.company.framework.models.requests.CreateUserRequest;
-import com.company.framework.models.requests.GenerateTokenRequest;
+import com.company.framework.models.requests.AuthRequest;
+import com.company.framework.models.requests.RegisterUserRequest;
 import io.restassured.response.Response;
 import com.company.framework.auth.UserContext;
 
@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class AccountClient extends BaseApiClient {
 
-    public Response createUser(CreateUserRequest request) {
-        CreateUserRequest req = request;
+    public Response createUser(RegisterUserRequest request) {
+        RegisterUserRequest req = request;
         
 
         Response resp = post(Endpoints.CREATE_USER, req);
@@ -28,7 +28,7 @@ public class AccountClient extends BaseApiClient {
         return resp;
     }
 
-    public Response generateToken(GenerateTokenRequest request) {
+    public Response generateToken(AuthRequest request) {
         Response response = post(Endpoints.GENERATE_TOKEN, request);
         String token = response.jsonPath().getString("token");
         TokenManager.put(UserContext.getUsername(), token);
@@ -42,7 +42,7 @@ public class AccountClient extends BaseApiClient {
     }
 
     public synchronized void refresh() {
-       this.generateToken(new GenerateTokenRequest(UserContext.getUsername(), UserContext.getPassword()));   
+       this.generateToken(AuthRequest.builder().email(UserContext.getUsername()).password(UserContext.getPassword()).build());
     }
 
 }

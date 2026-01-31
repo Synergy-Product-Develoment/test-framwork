@@ -2,20 +2,14 @@ package com.company.framework.core;
 
 import com.company.framework.auth.TokenManager;
 import com.company.framework.auth.UserContext;
-import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.config.ConfigManager;
-import com.company.framework.models.requests.CreateUserRequest;
-import com.company.framework.models.requests.GenerateTokenRequest;
 import io.qameta.allure.Allure;
 import io.restassured.filter.Filter;
 import io.restassured.filter.FilterContext;
 import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
-
-import java.util.Objects;
-import java.util.UUID;
 
 public class AutoAuthRetryFilter implements Filter {
 

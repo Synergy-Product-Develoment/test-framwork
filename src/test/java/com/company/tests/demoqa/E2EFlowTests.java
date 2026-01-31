@@ -1,18 +1,14 @@
 package com.company.tests.demoqa;
 
 import com.company.framework.assertions.ApiAssertions;
-import com.company.framework.auth.TokenManager;
 import com.company.framework.auth.UserContext;
 import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.clients.BookStoreClient;
-import com.company.framework.models.requests.CreateUserRequest;
-import com.company.framework.models.requests.GenerateTokenRequest;
+import com.company.framework.models.requests.RegisterUserRequest;
+import com.company.framework.models.requests.AuthRequest;
 import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
-import org.testng.annotations.Test;
-
-import java.util.UUID;
 
 public class E2EFlowTests extends BaseTest {
 
@@ -26,13 +22,13 @@ public class E2EFlowTests extends BaseTest {
         String username = ctx.username();
         String password = ctx.password();
 
-        Response createResp = accountClient.createUser(new CreateUserRequest(username, password));
+        Response createResp = accountClient.createUser(new RegisterUserRequest(username, password));
         ApiAssertions.assertStatus(createResp, 201);
 
         String userId = createResp.jsonPath().getString("userID");
         ApiAssertions.assertNotNull(userId, "userID should not be null");
 
-        Response tokenResp = accountClient.generateToken(new GenerateTokenRequest(username, password));
+        Response tokenResp = accountClient.generateToken(AuthRequest.builder().email(username).password(password).build());
         ApiAssertions.assertStatus(tokenResp, 200);
 
         String token = tokenResp.jsonPath().getString("token");

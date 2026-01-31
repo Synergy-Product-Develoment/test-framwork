@@ -1,18 +1,13 @@
 package com.company.tests.demoqa;
 
 import com.company.framework.assertions.ApiAssertions;
-import com.company.framework.auth.TokenManager;
 import com.company.framework.auth.UserContext;
 import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AccountClient;
-import com.company.framework.models.requests.CreateUserRequest;
+import com.company.framework.models.requests.RegisterUserRequest;
 import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
-import java.util.UUID;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class AccountTests extends BaseTest {
 
@@ -25,7 +20,7 @@ public class AccountTests extends BaseTest {
         String username = ctx.username();
         String password = ctx.password();
 
-        Response response = accountClient.createUser(new CreateUserRequest(username, password));
+        Response response = accountClient.createUser(new RegisterUserRequest(username, password));
 
        // response.then().body(matchesJsonSchemaInClasspath("schemas/create-user-response-schema.json"));
         ApiAssertions.assertStatus(response, 201);

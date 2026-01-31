@@ -5,7 +5,7 @@ import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AccountClient;
 import com.company.framework.db.DbManager;
 import com.company.framework.db.DbClient;
-import com.company.framework.models.requests.CreateUserRequest;
+import com.company.framework.models.requests.RegisterUserRequest;
 import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
 import org.testng.SkipException;
@@ -23,7 +23,7 @@ public class DbValidationTests extends BaseTest {
         AccountClient client = new AccountClient();
         AuthContext ctx = UserContext.get();
         String username = ctx.username();
-        CreateUserRequest request = new CreateUserRequest(username, "P@ssw0rd");
+        RegisterUserRequest request = new RegisterUserRequest(username, "P@ssw0rd");
         Response resp = client.createUser(request);
         int status = resp.getStatusCode();
 
