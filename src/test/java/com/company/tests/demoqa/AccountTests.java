@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 
 import java.util.UUID;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class AccountTests extends BaseTest {
 
     private final AccountClient accountClient = new AccountClient();
@@ -25,6 +27,7 @@ public class AccountTests extends BaseTest {
 
         Response response = accountClient.createUser(new CreateUserRequest(username, password));
 
+        response.then().body(matchesJsonSchemaInClasspath("schemas/create-user-response-schema.json"));
         ApiAssertions.assertStatus(response, 201);
 
         String userId = response.jsonPath().getString("userID");

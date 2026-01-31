@@ -13,5 +13,7 @@ public final class SchemaValidatorUtil {
         InputStream is = SchemaValidatorUtil.class.getClassLoader().getResourceAsStream(schemaPathInResources);
         if (is == null) throw new RuntimeException("Schema not found in resources: " + schemaPathInResources);
         response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(is));
+
+        //matchesJsonSchemaInClasspath("schemas/books-schema.json");
     }
 }

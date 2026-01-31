@@ -1,6 +1,11 @@
 package com.company.framework.models.requests;
 
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
 public class GenerateTokenRequest {
     public String userName;
     public String password;
@@ -10,14 +15,6 @@ public class GenerateTokenRequest {
     public GenerateTokenRequest(String userName, String password) {
         this.userName = userName;
         this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setUserName(String userName) {

@@ -10,8 +10,7 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-
-        <restassured.version>5.4.0</restassured.version>
+        <restassured.version>6.0.0</restassured.version>
         <testng.version>7.10.2</testng.version>
         <jackson.version>2.17.1</jackson.version>
         <slf4j.version>2.0.13</slf4j.version>
@@ -73,7 +72,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.6</version>
+            <version>1.5.13</version>
         </dependency>
 
         <!-- Allure -->
@@ -87,7 +86,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <version>42.7.7</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -104,6 +103,12 @@
             <artifactId>allure-rest-assured</artifactId>
 <!--            <scope>test</scope>-->
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.42</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -118,8 +123,6 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                        <!-- default child suite path (relative) -->
-<!--                        <child.suite.file>${child.suite.file}</child.suite.file>-->
 
                         <!-- resolved absolute path -->
 <!--                        <child.suite.file.abs>${project.basedir}/${child.suite.file}</child.suite.file.abs>-->
