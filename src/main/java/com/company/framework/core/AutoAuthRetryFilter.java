@@ -27,12 +27,10 @@ public class AutoAuthRetryFilter implements Filter {
             return response;
         }
         // Retry once only
-
         Allure.step("Auth failed (" + response.statusCode() + "). Autheticating token and retrying request...");
-        authClient.refresh();
         requestSpec.removeHeader("Authorization");
+        authClient.refresh();
         requestSpec.header("Authorization", "Bearer " + TokenManager.get(UserContext.getUsername()));
-
         return  ctx.next(requestSpec, responseSpec);
     }
 

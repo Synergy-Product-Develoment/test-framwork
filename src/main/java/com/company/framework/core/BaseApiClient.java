@@ -12,8 +12,8 @@ public abstract class BaseApiClient {
     protected RequestSpecification given() {
         return RestAssured.given()
                 .spec(RequestSpecFactory.defaultSpec())
-                .filters(Arrays.asList(RestAssuredReportingFilters.defaultFilters()));
-               // .filter(new AutoAuthRetryFilter());
+                .filters(Arrays.asList(RestAssuredReportingFilters.defaultFilters()))
+                .filter(new AutoAuthRetryFilter());
     }
 
     protected Response get(String path) {
