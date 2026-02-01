@@ -3,19 +3,18 @@ package com.company.framework.auth;
 import java.util.UUID;
 
 import com.company.framework.auth.UserContext.AuthContext;
+import com.company.framework.config.ConfigManager;
 
 public final class AuthBootstrap {
 
     public static AuthContext init() {
-        String randomUser = "user_" + UUID.randomUUID().toString().substring(0, 8);
-        String randomPwd  = "pwd_A_@" + UUID.randomUUID().toString().substring(0, 12);
-
+        String email = ConfigManager.get("auth.email");
+        String password = ConfigManager.get("auth.password");
+        String deviceId = ConfigManager.get("auth.deviceKey");
         // initially no token
-        AuthContext ctx = new AuthContext(randomUser, randomPwd, null);
-
+        AuthContext ctx = new AuthContext(email, password, null, deviceId);
         // cache it globally per thread
         UserContext.set(ctx);
-
         return ctx;
     }
 

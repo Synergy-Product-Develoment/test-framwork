@@ -7,6 +7,35 @@
     <artifactId>api-automation-framework</artifactId>
     <version>1.0.0</version>
 
+    <profiles>
+        <!-- Development profile -->
+        <profile>
+            <id>dev</id>
+            <properties>
+<!--                <suiteXmlFile>src/test/resources/testng-dev.xml</suiteXmlFile>-->
+                <env>dev</env>
+            </properties>
+        </profile>
+
+        <!-- QA profile -->
+        <profile>
+            <id>qa</id>
+            <properties>
+<!--                <suiteXmlFile>src/test/resources/testng-qa.xml</suiteXmlFile>-->
+                <env>qa</env>
+            </properties>
+        </profile>
+
+        <!-- Production profile -->
+        <profile>
+            <id>prod</id>
+            <properties>
+<!--                <suiteXmlFile>src/test/resources/testng-prod.xml</suiteXmlFile>-->
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

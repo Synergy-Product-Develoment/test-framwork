@@ -20,7 +20,6 @@ public abstract class BaseTest {
 
     @BeforeMethod
     public void beforeMethod() {
-        AuthBootstrap.init();
     }
     
     @AfterMethod

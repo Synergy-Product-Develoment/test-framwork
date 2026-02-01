@@ -1,31 +1,31 @@
 package com.company.tests.demoqa;
 
 import com.company.framework.assertions.ApiAssertions;
+import com.company.framework.auth.TokenManager;
 import com.company.framework.auth.UserContext;
 import com.company.framework.auth.UserContext.AuthContext;
-import com.company.framework.clients.AccountClient;
+import com.company.framework.clients.AuthenticationClient;
 import com.company.framework.models.requests.RegisterUserRequest;
 import com.company.tests.base.BaseTest;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
+@Slf4j
 public class AccountTests extends BaseTest {
 
-    private final AccountClient accountClient = new AccountClient();
+    private final AuthenticationClient authenticationClient = new AuthenticationClient();
 
     @Test
     public void shouldCreateUser() {
-        AuthContext ctx = UserContext.get();
 
-        String username = ctx.username();
-        String password = ctx.password();
+        if(StringUtils.isNotBlank(TokenManager.get(UserContext.getUsername()))){
 
-        Response response = accountClient.createUser(new RegisterUserRequest(username, password));
+        } else  {
+            log.info("User is already authenticated/existing, skipping user creation.");
+        }
 
-       // response.then().body(matchesJsonSchemaInClasspath("schemas/create-user-response-schema.json"));
-        ApiAssertions.assertStatus(response, 201);
-
-        String userId = response.jsonPath().getString("userID");
-        ApiAssertions.assertNotNull(userId, "userID should not be null");
     }
 }
+

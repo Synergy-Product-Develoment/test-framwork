@@ -1,14 +1,18 @@
 package com.company.framework.config;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.InputStream;
 import java.util.Properties;
 
+@Slf4j
 public final class ConfigManager {
 
     private static final Properties props = new Properties();
 
     static {
         String env = System.getProperty("env", "qa");
+        log.info("Loading configuration for environment: {}", env);
         String fileName = "config/application-" + env + ".properties";
 
         try (InputStream is = ConfigManager.class.getClassLoader().getResourceAsStream(fileName)) {

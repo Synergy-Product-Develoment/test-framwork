@@ -1,2 +1,3 @@
 com.company.framework.listeners.SuiteAuthSetupListener
+com.company.framework.listeners.ExecutionListener
 io.qameta.allure.testng.AllureTestNg

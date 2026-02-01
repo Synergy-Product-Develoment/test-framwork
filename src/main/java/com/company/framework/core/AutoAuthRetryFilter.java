@@ -2,7 +2,7 @@ package com.company.framework.core;
 
 import com.company.framework.auth.TokenManager;
 import com.company.framework.auth.UserContext;
-import com.company.framework.clients.AccountClient;
+import com.company.framework.clients.AuthenticationClient;
 import com.company.framework.config.ConfigManager;
 import io.qameta.allure.Allure;
 import io.restassured.filter.Filter;
@@ -15,7 +15,7 @@ public class AutoAuthRetryFilter implements Filter {
 
     private static final int MAX_RETRY = 1;
 
-    AccountClient authClient = new AccountClient();
+    AuthenticationClient authClient = new AuthenticationClient();
     private String getDefaultUser() {
         return ConfigManager.get("auth.default.user", "default");
     }

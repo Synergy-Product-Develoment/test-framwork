@@ -2,59 +2,45 @@ package com.company.framework.auth;
 
 public final class UserContext {
 
-    private static final ThreadLocal<AuthContext> ctx = new ThreadLocal<>();
+    private static AuthContext ctx;
 
     private UserContext() {}
 
-    public static void set(String username, String password) {
-        ctx.set(new AuthContext(username, password, null));
+    public static void set(String username, String password, String deviceId) {
+        ctx = new AuthContext(username, password, null, deviceId);
     }
 
     public static void set(AuthContext auth) {
-        ctx.set(auth);
+        ctx= auth;
     }
 
-    public static void set(String username, String password, String userId) {
-        ctx.set(new AuthContext(username, password, userId));
+    public static void set(String username, String password, String userId, String deviceId) {
+        ctx= new AuthContext(username, password, userId, deviceId);
     }
 
     public static AuthContext get() {
-        return ctx.get();
+        return ctx;
     }
 
     public static String getUsername() {
-        AuthContext a = ctx.get();
-        return a == null ? null : a.username();
+        return ctx == null ? null : ctx.email();
     }
 
     public static String getPassword() {
-        AuthContext a = ctx.get();
+        AuthContext a = ctx;
         return a == null ? null : a.password();
     }
 
     public static String getUserId() {
-        AuthContext a = ctx.get();
+        AuthContext a = ctx;
         return a == null ? null : a.userId();
     }
 
     public static void clear() {
-        ctx.remove();
+        ctx = null;
     }
 
 
-public static class AuthContext {
-    private final String username;
-    private final String password;
-    private final String userId;
 
-    public AuthContext(String username, String password,  String userId) {
-        this.username = username;
-        this.password = password;
-        this.userId = userId;
-    }
-
-    public String username() { return username; }
-    public String password() { return password; }
-    public String userId() { return userId; }
-}
+    public record AuthContext(String email, String password, String userId, String deviceId) { }
 }
