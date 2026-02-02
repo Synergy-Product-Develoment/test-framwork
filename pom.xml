@@ -44,7 +44,7 @@
         <jackson.version>2.17.1</jackson.version>
         <slf4j.version>2.0.13</slf4j.version>
         <allure.version>2.25.0</allure.version>
-
+        <env>dev</env> <!-- default -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- Default TestNG suite file; points to parent which includes child via -Dchild.suite.file -->
         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
@@ -168,6 +168,7 @@
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
+                        <env>${env}</env>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>

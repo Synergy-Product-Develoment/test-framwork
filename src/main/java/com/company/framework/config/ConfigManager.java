@@ -11,7 +11,7 @@ public final class ConfigManager {
     private static final Properties props = new Properties();
 
     static {
-        String env = System.getProperty("env", "qa");
+        String env = System.getProperty("env", "dev");
         log.info("Loading configuration for environment: {}", env);
         String fileName = "config/application-" + env + ".properties";
 
