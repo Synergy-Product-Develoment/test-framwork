@@ -1,13 +1,9 @@
-package com.company.tests.demoqa;
+package com.company.demoqa;
 
-import com.company.framework.assertions.ApiAssertions;
 import com.company.framework.auth.TokenManager;
 import com.company.framework.auth.UserContext;
-import com.company.framework.auth.UserContext.AuthContext;
 import com.company.framework.clients.AuthenticationClient;
-import com.company.framework.models.requests.RegisterUserRequest;
-import com.company.tests.base.BaseTest;
-import io.restassured.response.Response;
+import com.company.base.BaseTest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;

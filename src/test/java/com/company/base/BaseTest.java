@@ -1,4 +1,4 @@
-package com.company.tests.base;
+package com.company.base;
 
 import com.company.framework.auth.AuthBootstrap;
 import org.testng.annotations.AfterSuite;

@@ -1,4 +1,4 @@
-package com.company.tests.validator;
+package com.company.validator;
 
 public class BooksValidator {
 

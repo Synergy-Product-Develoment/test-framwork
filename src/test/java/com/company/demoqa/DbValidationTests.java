@@ -1,18 +1,7 @@
-package com.company.tests.demoqa;
+package com.company.demoqa;
 
-import com.company.framework.auth.UserContext;
-import com.company.framework.auth.UserContext.AuthContext;
-import com.company.framework.clients.AuthenticationClient;
-import com.company.framework.db.DbManager;
-import com.company.framework.db.DbClient;
-import com.company.framework.models.requests.RegisterUserRequest;
-import com.company.tests.base.BaseTest;
-import io.restassured.response.Response;
-import org.testng.SkipException;
+import com.company.base.BaseTest;
 import org.testng.annotations.Test;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.testng.Assert.assertTrue;
 
